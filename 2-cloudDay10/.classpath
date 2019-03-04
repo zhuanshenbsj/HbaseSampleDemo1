@@ -23,7 +23,7 @@
 	<classpathentry kind="lib" path="lib/commons-httpclient-3.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-io-2.4.jar"/>
 	<classpathentry kind="lib" path="lib/commons-lang-2.6.jar"/>
-	<classpathentry kind="lib" path="lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.2.jar" sourcepath="D:/CODE/source/commons-logging-1.2-src"/>
 	<classpathentry kind="lib" path="lib/commons-math-2.2.jar"/>
 	<classpathentry kind="lib" path="lib/commons-math3-3.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-net-3.1.jar"/>
@@ -35,7 +35,7 @@
 	<classpathentry kind="lib" path="lib/hadoop-annotations-2.5.1.jar"/>
 	<classpathentry kind="lib" path="lib/hadoop-auth-2.5.1.jar"/>
 	<classpathentry kind="lib" path="lib/hadoop-client-2.5.1.jar"/>
-	<classpathentry kind="lib" path="lib/hadoop-common-2.5.1.jar"/>
+	<classpathentry kind="lib" path="lib/hadoop-common-2.5.1.jar" sourcepath="D:/CODE/source/hadoop-common-2.5.1-sources.jar"/>
 	<classpathentry kind="lib" path="lib/hadoop-hdfs-2.5.1.jar"/>
 	<classpathentry kind="lib" path="lib/hadoop-mapreduce-client-app-2.5.1.jar"/>
 	<classpathentry kind="lib" path="lib/hadoop-mapreduce-client-common-2.5.1.jar"/>
@@ -51,9 +51,9 @@
 	<classpathentry kind="lib" path="lib/hbase-annotations-0.99.2-tests.jar"/>
 	<classpathentry kind="lib" path="lib/hbase-annotations-0.99.2.jar"/>
 	<classpathentry kind="lib" path="lib/hbase-checkstyle-0.99.2.jar"/>
-	<classpathentry kind="lib" path="lib/hbase-client-0.99.2.jar"/>
+	<classpathentry kind="lib" path="lib/hbase-client-0.99.2.jar" sourcepath="D:/CODE/source/hbase-0.99.2"/>
 	<classpathentry kind="lib" path="lib/hbase-common-0.99.2-tests.jar"/>
-	<classpathentry kind="lib" path="lib/hbase-common-0.99.2.jar"/>
+	<classpathentry kind="lib" path="lib/hbase-common-0.99.2.jar" sourcepath="D:/CODE/source/hbase-common-0.99.2-sources.jar"/>
 	<classpathentry kind="lib" path="lib/hbase-examples-0.99.2.jar"/>
 	<classpathentry kind="lib" path="lib/hbase-hadoop-compat-0.99.2.jar"/>
 	<classpathentry kind="lib" path="lib/hbase-hadoop2-compat-0.99.2.jar"/>
@@ -101,7 +101,7 @@
 	<classpathentry kind="lib" path="lib/junit-4.11.jar"/>
 	<classpathentry kind="lib" path="lib/leveldbjni-all-1.8.jar"/>
 	<classpathentry kind="lib" path="lib/libthrift-0.9.0.jar"/>
-	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar" sourcepath="D:/CODE/source/apache-log4j-1.2.17"/>
 	<classpathentry kind="lib" path="lib/metrics-core-2.2.0.jar"/>
 	<classpathentry kind="lib" path="lib/netty-3.2.4.Final.jar"/>
 	<classpathentry kind="lib" path="lib/netty-all-4.0.23.Final.jar"/>
