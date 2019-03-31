@@ -16,6 +16,7 @@ import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.ConnectionFactory;
+import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.HBaseAdmin;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Result;
@@ -32,6 +33,8 @@ import org.apache.hadoop.hbase.util.Bytes;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import cn.itcast_01_hbase.Phone.pdetail;
 
 public class HbaseTest_PhoneInfo {
 	Configuration conf = null;
@@ -162,6 +165,43 @@ public class HbaseTest_PhoneInfo {
 		}
 	}
 
+	/**#######protobuf#######
+	 * 批量插入数据 通过protobuf(一千条变为十条)
+	 * 插入十个手机号 一天一百条通话记录
+	 * 满足查询 时间降序排序
+	 * @throws ParseException 
+	 * @throws IOException 
+	 */
+	@Test
+	public void insertPhoneInfo2() throws ParseException, IOException {
+		//一天的通话记录
+		Phone.pday.Builder pday = Phone.pday.newBuilder();
+		for (int i = 0; i < 10; i++) {
+			String rowkey;
+			String phoneNum = getPhoneNum("186");
+			String phoneDateString = getDate2("20190301");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss");
+			long dateLong = sdf.parse(phoneDateString).getTime();
+			rowkey = phoneNum + "_" + (Long.MAX_VALUE - dateLong);
+			for (int j = 0; j < 100; j++) {
+
+				//一条通话记录
+				Phone.pdetail.Builder detail = Phone.pdetail.newBuilder();
+				detail.setPnum(getPhoneNum("177"));
+				detail.setTime(phoneDateString);
+				detail.setType(r.nextInt(2) + "");
+
+				pday.addPlist(detail);
+			}
+			Put put = new Put(rowkey.getBytes());
+			put.add("info".getBytes(), "pday".getBytes(), pday.build().toByteArray());
+			table.put(put);
+			log4jLogger.info("####put successsful!(100 lines)");
+
+		}
+
+	}
+
 	/**
 	 * 随机生成手机号
 	 * @param prefix
@@ -172,13 +212,23 @@ public class HbaseTest_PhoneInfo {
 	}
 
 	/**
-	 * 随机生成年份
-	 * @param year
+	 * 随机生成时间
+	 * @param year 年国定
 	 * @return
 	 */
 	public String getDate(String year) {
 		return year + String.format("%02d%02d%02d%02d%02d", new Object[] { r.nextInt(12) + 1, r.nextInt(30) + 1,
 				r.nextInt(24) + 1, r.nextInt(60) + 1, r.nextInt(60) + 1, });
+	}
+
+	/**
+	 * 随机生成时间(年月日固定)
+	 * @param year 年 月 日
+	 * @return
+	 */
+	public String getDate2(String prefix) {
+		return prefix + String.format("%02d%02d%02d",
+				new Object[] { r.nextInt(24) + 1, r.nextInt(60) + 1, r.nextInt(60) + 1, });
 	}
 
 	/**
@@ -265,6 +315,26 @@ public class HbaseTest_PhoneInfo {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+
+	/**###########protobuf##########
+	 * 单条查询
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void queryData() throws Exception {
+		// 如果没有addFamily/addColumn就是查询所有列
+		Get get = new Get(Bytes.toBytes("18624770755_9223370485397349807"));
+		Result result = table.get(get);
+		Cell cell = result.getColumnLatestCell(Bytes.toBytes("info"), Bytes.toBytes("pday"));
+		Phone.pday pday = Phone.pday.parseFrom(CellUtil.cloneValue(cell));
+		for (pdetail dtl : pday.getPlistList()) {
+			System.out.println("------------------------");
+			System.out.println(dtl.getPnum());
+			System.out.println(dtl.getTime());
+			System.out.println(dtl.getType());
 		}
 	}
 
